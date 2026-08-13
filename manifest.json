@@ -1,6 +1,6 @@
 {
-  "name": "Ai-mizu 水分管理",
-  "short_name": "Ai-mizu",
+  "name": "mizu-navi",
+  "short_name": "mizu-navi",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f5fbff",
