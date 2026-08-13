@@ -1,7 +1,7 @@
-const CACHE='aimizu-v2';
+const CACHE='aimizu-v3';
 const ASSETS=[
   './','./index.html','./manifest.json',
-  './assets/icon-192.png','./assets/icon-512.png','./assets/mascot.png',
+  './assets/icon-192.png','./assets/icon-512.png','./mascot.PNG',
   './assets/med_water.png','./assets/cup_water.png','./assets/tea.png',
   './assets/coffee.png','./assets/milk.png','./assets/bottle.png',
   './assets/soup.png','./assets/other.png'
