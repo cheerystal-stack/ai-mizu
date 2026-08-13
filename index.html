@@ -20,7 +20,8 @@
       --blue:#49b5ec;
       --blue2:#8fd9f7;
       --soft:#eaf8ff;
-      --shadow:0 10px 30px rgba(70,145,185,.12);
+      --shadow:0 12px 32px rgba(62,146,190,.14);
+      --shadow-soft:0 7px 20px rgba(62,146,190,.10);
       --radius:26px;
     }
     *{box-sizing:border-box}
@@ -35,20 +36,29 @@
     .dw{text-align:right;font-size:12px;color:var(--muted)}
     .dw strong{display:block;color:var(--ink);font-size:17px;margin-top:2px}
     .hero{
-      background:var(--panel); border:1px solid var(--line); border-radius:32px;
-      box-shadow:var(--shadow); padding:24px 22px 20px; text-align:center;
+      background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(247,252,255,.96));
+      border:1px solid rgba(196,228,244,.95); border-radius:34px;
+      box-shadow:0 15px 35px rgba(49,144,191,.14), inset 0 1px 0 rgba(255,255,255,.95);
+      padding:25px 22px 21px; text-align:center;
     }
     .hero-label{font-size:14px;color:var(--muted)}
-    .remaining{font-size:64px;line-height:1;font-weight:850;color:#249fdf;letter-spacing:-.04em;margin:7px 0}
+    .remaining{
+      font-size:68px;line-height:1;font-weight:850;color:#249fdf;letter-spacing:-.045em;margin:7px 0;
+      text-shadow:0 2px 0 #fff, 0 5px 12px rgba(41,163,221,.18)
+    }
     .remaining small{font-size:22px;font-weight:700;letter-spacing:0}
     .mascot{
-      width:72px;height:72px;border-radius:50% 50% 58% 58%;
-      margin:8px auto;background:radial-gradient(circle at 35% 25%,#eaffff 0,#9be3fb 40%,#49b9ed 100%);
-      box-shadow:inset 0 6px 12px rgba(255,255,255,.7),0 7px 14px rgba(42,159,214,.18);
-      display:grid;place-items:center;font-size:31px;
+      width:82px;height:82px;margin:7px auto 4px;object-fit:contain;display:block;
+      filter:drop-shadow(0 8px 9px rgba(39,150,204,.17))
     }
-    .bar{height:14px;background:#e9edf0;border-radius:99px;overflow:hidden;margin-top:15px;box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
-    .bar .left{height:100%;background:linear-gradient(180deg,#70d0f5,#2ca8e3);border-radius:99px;transition:width .25s ease}
+    .bar{
+      height:16px;background:linear-gradient(180deg,#eef2f4,#e4eaee);border-radius:99px;overflow:hidden;margin-top:15px;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,.06),0 1px 0 #fff
+    }
+    .bar .left{
+      height:100%;background:linear-gradient(180deg,#88ddfa 0%,#42b8ed 58%,#2aa4e1 100%);border-radius:99px;
+      box-shadow:inset 0 2px 3px rgba(255,255,255,.55);transition:width .25s ease
+    }
     .hero-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;color:var(--muted)}
     .hero-note{font-size:13px;margin-top:10px}
     section{margin-top:22px}
@@ -61,12 +71,16 @@
     }
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
     .drink{
-      border:1px solid var(--line);background:rgba(255,255,255,.95);border-radius:22px;padding:9px 5px 10px;
-      box-shadow:0 5px 14px rgba(79,147,182,.08);min-height:132px;
+      border:1px solid rgba(205,231,244,.96);
+      background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);border-radius:23px;padding:9px 5px 10px;
+      box-shadow:0 8px 18px rgba(65,144,184,.10), inset 0 1px 0 rgba(255,255,255,.98);min-height:132px;
       transition:transform .08s ease, box-shadow .08s ease;
     }
     .drink:active{transform:scale(.96);box-shadow:0 2px 7px rgba(79,147,182,.08)}
-    .drink img{width:65px;height:65px;object-fit:contain;display:block;margin:0 auto 4px}
+    .drink img{
+      width:68px;height:68px;object-fit:contain;display:block;margin:0 auto 3px;
+      filter:drop-shadow(0 5px 5px rgba(71,141,175,.10))
+    }
     .drink-name{font-size:12px;font-weight:700;line-height:1.2}
     .drink-ml{font-size:12px;color:#259fdc;margin-top:3px;font-weight:700}
     .custom{
@@ -76,7 +90,11 @@
     .custom-row{display:grid;grid-template-columns:1fr 110px;gap:8px}
     .custom input{width:100%;border:1px solid var(--line);border-radius:13px;padding:10px;background:#fbfdff}
     .primary{width:100%;border:0;border-radius:14px;background:#e6f6ff;color:#138fcf;font-weight:800;padding:11px;margin-top:8px}
-    .panel{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:14px 16px;box-shadow:0 6px 20px rgba(79,147,182,.07)}
+    .panel{
+      background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(250,253,255,.96));
+      border:1px solid rgba(207,232,244,.95);border-radius:25px;padding:14px 16px;
+      box-shadow:var(--shadow-soft),inset 0 1px 0 rgba(255,255,255,.98)
+    }
     .log-row{display:grid;grid-template-columns:1fr auto 34px;gap:9px;align-items:center;padding:11px 0;border-bottom:1px solid #edf3f6}
     .log-row:last-child{border-bottom:0}
     .log-main{display:flex;align-items:center;gap:9px;font-size:14px}
@@ -92,9 +110,9 @@
     .bars{height:135px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end}
     .daycol{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}
     .vbar{
-      width:78%;min-height:4px;border-radius:10px 10px 5px 5px;
-      background:linear-gradient(180deg,#98ddf8,#54b9e9);
-      box-shadow:inset 0 2px 4px rgba(255,255,255,.65),0 3px 8px rgba(65,164,209,.13);
+      width:78%;min-height:4px;border-radius:13px 13px 6px 6px;
+      background:linear-gradient(180deg,#a8e5fa 0%,#6acaf0 55%,#4ab3e5 100%);
+      box-shadow:inset 0 3px 4px rgba(255,255,255,.72),0 5px 9px rgba(65,164,209,.14);
       transition:height .25s ease;
     }
     .day{font-size:10px;color:var(--muted)}
@@ -128,10 +146,10 @@
   <div class="hero" aria-live="polite">
     <div class="hero-label">今日あと飲める目安</div>
     <div class="remaining"><span id="remaining">800</span><small> mL</small></div>
-    <div class="mascot">☺</div>
+    <img class="mascot" src="./assets/mascot.png" alt="水滴のキャラクター">
     <div class="bar"><div class="left" id="remainBar" style="width:100%"></div></div>
     <div class="hero-meta"><span>残り <b id="remainingSmall">800mL</b></span><span>摂取 <b id="usedText">0mL</b></span></div>
-    <div class="hero-note" id="heroNote">今日は800mLまでを目安に</div>
+    <div class="hero-note" id="heroNote">1日の水分は800mLまでを目安に</div>
   </div>
 
   <section>
@@ -162,7 +180,7 @@
 
   <section>
     <div class="section-head">
-      <div><h2>過去7日間の記録</h2><div class="sub">毎日の水分量をそのまま見る</div></div>
+      <div><h2>7日間の記録</h2><div class="sub">毎日の水分量をそのまま見る</div></div>
     </div>
     <div class="panel">
       <div class="chart-wrap">
@@ -364,7 +382,7 @@ function render(){
   document.getElementById('memoTotal').textContent=used+'mL';
   document.getElementById('remainBar').style.width=pct+'%';
   document.getElementById('heroNote').textContent =
-    used<=settings.limit ? `今日は${settings.limit}mLまでを目安に` : '今日はここから少し気をつけよう 💧';
+    used<=settings.limit ? `1日の水分は${settings.limit}mLまでを目安に` : '今日はここから少し気をつけよう 💧';
   document.getElementById('dwTop').textContent=Number(settings.dw).toFixed(1);
   document.getElementById('dwInput').value=settings.dw;
   document.getElementById('limitInput').value=settings.limit;
