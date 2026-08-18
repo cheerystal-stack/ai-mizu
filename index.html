@@ -6,12 +6,8 @@
   <meta name="theme-color" content="#eaf7ff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="MIZU-NAVI">
+  <meta name="apple-mobile-web-app-title" content="Ai-mizu">
   <title>みずナビ | MIZU-NAVI</title>
-  <meta property="og:title" content="みずナビ | MIZU-NAVI">
-<meta property="og:description" content="今日の水分を、無理なく大切に。毎日の水分管理をサポートします。">
-<meta property="og:image" content="https://cheerystal-stack.github.io/ai-mizu/assets/icon-512.png">
-<meta property="og:type" content="website">
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./assets/icon-192.png">
   <style>
@@ -165,6 +161,13 @@
     .settings{display:grid;gap:10px;margin-top:12px}
     .settings label{font-size:12px;color:var(--muted)}
     .settings input{width:100%;margin-top:4px;border:1px solid var(--line);border-radius:13px;padding:10px;background:white}
+    .drink-settings{margin-top:6px;padding-top:12px;border-top:1px solid var(--line)}
+    .drink-settings-title{font-size:14px;font-weight:800;color:var(--ink)}
+    .drink-settings-sub{font-size:11px;color:var(--muted);margin:3px 0 10px}
+    .drink-settings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+    .drink-settings-grid label{font-size:11px;color:var(--muted)}
+    .drink-settings-grid input{margin-top:4px}
+
     @media(max-width:420px){
       .app{padding-left:12px;padding-right:12px}
       .grid{grid-template-columns:repeat(4,1fr);gap:6px}
@@ -262,12 +265,25 @@
       <label>1日の水分目安（mLまで）
         <input id="limitInput" type="number" inputmode="numeric" value="800" step="50">
       </label>
+      <div class="drink-settings">
+        <div class="drink-settings-title">いつもの量</div>
+        <div class="drink-settings-sub">普段使うコップやマグに合わせて変更できます</div>
+        <div class="drink-settings-grid">
+          <label>服薬の水<input class="drink-amount-input" data-drink-id="med_water" type="number" inputmode="numeric" min="1" step="10"></label>
+          <label>コップの水<input class="drink-amount-input" data-drink-id="cup_water" type="number" inputmode="numeric" min="1" step="10"></label>
+          <label>お茶<input class="drink-amount-input" data-drink-id="tea" type="number" inputmode="numeric" min="1" step="10"></label>
+          <label>コーヒー<input class="drink-amount-input" data-drink-id="coffee" type="number" inputmode="numeric" min="1" step="10"></label>
+          <label>牛乳<input class="drink-amount-input" data-drink-id="milk" type="number" inputmode="numeric" min="1" step="10"></label>
+          <label>ペットボトル<input class="drink-amount-input" data-drink-id="bottle" type="number" inputmode="numeric" min="1" step="10"></label>
+          <label>汁物<input class="drink-amount-input" data-drink-id="soup" type="number" inputmode="numeric" min="1" step="10"></label>
+        </div>
+      </div>
     </div>
   </details>
 </div>
 
 <script>
-const DRINKS = [
+const DRINK_DEFAULTS = [
   {id:'med_water', name:'服薬の水', amount:60, image:'./assets/med_water.png'},
   {id:'cup_water', name:'コップの水', amount:200, image:'./assets/cup_water.png'},
   {id:'tea', name:'お茶', amount:200, image:'./assets/tea.png'},
@@ -278,12 +294,31 @@ const DRINKS = [
   {id:'other', name:'その他', amount:null, image:'./assets/other.png'}
 ];
 
+function getDrinks(){
+  return DRINK_DEFAULTS.map(d => {
+    if(d.amount === null) return {...d};
+    const saved = settings.drinkAmounts && settings.drinkAmounts[d.id];
+    return {...d, amount: Number(saved) > 0 ? Number(saved) : d.amount};
+  });
+}
+
 const LS = {
   settings:'aimizu-settings-v1',
   entries:'aimizu-entries-v1'
 };
 
 let settings = JSON.parse(localStorage.getItem(LS.settings) || '{"dw":54,"limit":800}');
+if(!settings.drinkAmounts){
+  settings.drinkAmounts = {
+    med_water:60,
+    cup_water:200,
+    tea:200,
+    coffee:150,
+    milk:200,
+    bottle:500,
+    soup:150
+  };
+}
 let allEntries = JSON.parse(localStorage.getItem(LS.entries) || '[]');
 let lastDeleted = null;
 
@@ -339,7 +374,7 @@ function goToday(){
 function renderGrid(){
   const grid = document.getElementById('drinkGrid');
   grid.innerHTML = '';
-  DRINKS.forEach(d=>{
+  getDrinks().forEach(d=>{
     const b = document.createElement('button');
     b.className='drink';
     b.type='button';
@@ -471,6 +506,10 @@ function render(){
   document.getElementById('dwTop').textContent=Number(settings.dw).toFixed(1);
   document.getElementById('dwInput').value=settings.dw;
   document.getElementById('limitInput').value=settings.limit;
+  document.querySelectorAll('.drink-amount-input').forEach(input=>{
+    const id = input.dataset.drinkId;
+    input.value = settings.drinkAmounts[id];
+  });
   renderLog(); renderBars(); renderTrend();
 }
 
@@ -500,6 +539,17 @@ document.getElementById('limitInput').addEventListener('change',e=>{
 document.getElementById('prevDay').addEventListener('click',()=>changeSelectedDate(-1));
 document.getElementById('nextDay').addEventListener('click',()=>changeSelectedDate(1));
 document.getElementById('todayBtn').addEventListener('click',goToday);
+
+document.querySelectorAll('.drink-amount-input').forEach(input=>{
+  input.addEventListener('change', e=>{
+    const id = e.target.dataset.drinkId;
+    const value = Math.max(1, Number(e.target.value) || 1);
+    settings.drinkAmounts[id] = value;
+    save();
+    renderGrid();
+    render();
+  });
+});
 
 renderGrid(); render();
 
